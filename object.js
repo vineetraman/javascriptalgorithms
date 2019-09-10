@@ -1,0 +1,17 @@
+var a = {"a":"A"};
+console.log(a);
+var b = a;
+a.a = "B";
+console.log(a);
+console.log(b);
+var e = {"e":"E"};
+a = e;
+console.log(a);
+console.log(b);
+var d = {"d":"D"};
+var temp = d;
+d = a;
+a = temp;
+console.log("d  : ");
+console.log(d);
+console.log(a);
