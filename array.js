@@ -200,6 +200,248 @@ function findduplicatesinarray2(arr) {
     return duplicatevalue ? duplicatevalue : null;
 }
 
+
+
+
+//Return the highest product possible by multiplying 3 numbers from the array.
+function maxp3(A) {
+    A.sort(function (a, b) {
+        return a - b;
+    });
+
+    var bottom = A[0] * A[1] * A[A.length - 1];
+    var top = A[A.length - 1] * A[A.length - 2] * A[A.length - 3];
+
+    return Math.max(bottom, top);
+}
+
+/* function minhoppings(ArrSeat) {
+    var arr = [];
+    var prevarr = [];
+    for (var i = 0; i < ArrSeat.length; i++) {
+        if (ArrSeat[i]) {
+            arr.push(i);
+        } else {
+            if (prevarr.length < arr.length) {
+                prevarr = [].concat(arr);
+            }
+            arr = [];
+        }
+    }
+    if (prevarr.length < arr.length) {
+        prevarr = [].concat(arr);
+    }
+    var ostart, start;
+    ostart = start = prevarr[0] - 1;
+    var oend, end;
+    oend = end = prevarr[prevarr.length - 1] + 1;
+    var count = 0;
+    while(start > -1 || end < ArrSeat.length - 1){
+        if(ArrSeat[start]){
+            count += ostart - start;
+            prevarr.unshift(start);
+            ostart--;
+        }
+        if(ArrSeat[end]){
+            count += end - oend;
+            prevarr.push(ArrSeat[start]);
+            oend++;
+        }
+        start--;
+        end++;
+    }
+    return count;
+} */
+/* function minhoppings(ArrSeat) {
+    var arr = [];
+    var prevarr = [];
+    for (var i = 0; i < ArrSeat.length; i++) {
+        if (ArrSeat[i] === "x") {
+            arr.push(i);
+        } else {
+            if (prevarr.length < arr.length) {
+                prevarr = [].concat(arr);
+            }
+            arr = [];
+        }
+    }
+    if (prevarr.length < arr.length) {
+        prevarr = [].concat(arr);
+    }
+    var ostart, start;
+    ostart = start = prevarr[0] - 1;
+    var oend, end;
+    oend = end = prevarr[prevarr.length - 1] + 1;
+    var count = 0;
+    while(start > -1 || end < ArrSeat.length){
+        if(ArrSeat[start] === "x"){
+            count += ostart - start;
+            prevarr.unshift(start);
+            ostart--;
+        }
+        if(ArrSeat[end] === "x"){
+            count += end - oend;
+            prevarr.push(ArrSeat[start]);
+            oend++;
+        }
+        start--;
+        end++;
+    }
+    return count;
+} */
+
+function minhoppings(ArrSeat) {
+    var arr = [];
+    var prevarr = [];
+    for (var i = 0; i < ArrSeat.length; i++) {
+        if (ArrSeat[i] === "x") {
+            arr.push(i);
+        }
+    }
+    var median;
+    var half = Math.floor(arr.length / 2);
+
+    if (arr.length % 2) {
+        median = arr[half];
+    } else {
+        median = Math.floor((arr[half - 1] + arr[half]) / 2.0);
+    }
+    var ostart, start;
+    ostart = start = ArrSeat[median] === "x" ? median - 1 : median;
+    var oend, end;
+    oend = end = median + 1;
+    var count = 0;
+    while (start > -1 || end < ArrSeat.length) {
+        if (ArrSeat[start] === "x") {
+            count += ostart - start;
+            //prevarr.unshift(start);
+            ostart--;
+        }
+        if (ArrSeat[end] === "x") {
+            count += end - oend;
+            //prevarr.push(ArrSeat[start]);
+            oend++;
+        }
+        start--;
+        end++;
+    }
+    return count;
+}
+
+//https://www.interviewbit.com/problems/bulbs/
+
+function bulbs(arr) {
+    var count = 0;
+    if (arr && arr.length > 0) {
+        if (arr.length === 1) {
+            count = arr[0] === 0 ? 1 : 0;
+            return count;
+        }
+        var checkvalue = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === checkvalue) {
+                arr[i] = 1;
+                count++;
+                checkvalue = checkvalue === 0 ? 1 : 0;
+            }
+        }
+    }
+    return count;
+}
+
+//unsorted array, continuous subarray
+function findsubarrayforgivensum(arr, givensum){
+    //var subarr = [];
+    var sum = 0;
+    var i = 0;
+    var j = 0;
+    while(i < arr.length){
+        subarr.push(arr[i]);
+        sum += arr[i];
+        if(sum === givensum){
+            return arr.slice(j,i + 1);//return subarr;
+        }
+        if(sum > givensum ){
+            //sum -= subarr.shift();
+            sum -= arr[j];
+            j++;
+        }
+        i++;
+    }
+    return -1;
+}
+
+//Given an array of distinct integers. The task is to count all the triplets such that sum of two elements equals the third element.
+function counttriplets(arr){
+    if(!arr || arr.length < 1){
+        return -1;
+    }
+    arr.sort(function(a,b){
+        return b - a;
+    });
+    var i = 0;
+    var count = 0;
+    var answer = [];
+    for(i;i < arr.length;i++){
+        var j = i + 1, k = arr.length - 1;
+        var sum = 0;
+        while(j < k){
+            sum = arr[j] + arr[k];
+            if(sum === arr[i]){
+                answer.push([arr[i],arr[j],arr[k]]);
+                count++;
+                break;
+            }
+            if(sum > arr[i]){
+                j++;
+                //sum -= arr[j];
+            }
+            if(sum < arr[i]){
+                k--;
+                //sum -= arr[k];
+            }
+        }
+    }
+    console.log(answer);
+    return count;
+}
+
+//kadane's algorithm
+//Given an array arr of N integers. Find the contiguous sub-array with maximum sum.
+function maxsuminarray(arr){
+    var localmax = 0;
+    var globalmax = -Infinity;
+    for(var i = 0; i < arr.length; i++){
+        localmax = Math.max(arr[i], localmax + arr[i]);
+        if(localmax > globalmax){
+            globalmax = localmax;
+        }
+    }
+    return globalmax;
+}
+
+function subarraywithmaxsum(arr){
+    var localmax = -Infinity;
+    var globalmax = -Infinity;
+    var localstart = 0;
+    var globalstart;
+    var end = 0;
+    for(var i = 0; i < arr.length; i++){
+        if(arr[i] > localmax + arr[i]){
+            localmax = arr[i];
+            localstart = i;
+        }else{
+            localmax += arr[i];
+        }
+        if(localmax > globalmax){
+            globalstart = localstart;
+            globalmax = localmax;
+            end = i;
+        }
+    }
+    console.log(arr.slice(globalstart, end + 1));
+}
+
 (function () {
     var a = Array.apply(null, { length: 10000 }).map(Math.random);
     var t1 = performance.now();
